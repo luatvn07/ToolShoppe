@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopee Affiliate Link Generator</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cấu hình màu sắc tùy chỉnh -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ee4d2d', // Màu cam Shopee
+                        secondary: '#ff7337',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 antialiased text-gray-800 selection:bg-orange-200 selection:text-primary">
+
+    <!-- THANH ĐIỀU HƯỚNG (NAVBAR) -->
+    <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold text-primary tracking-tight">ShopeeAffil<span class="text-gray-900">.</span></a>
+                </div>
+                
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#generator" class="text-gray-600 hover:text-primary transition font-medium">Tạo Link</a>
+                    <a href="#guide" class="text-gray-600 hover:text-primary transition font-medium">Hướng dẫn</a>
+                    <a href="#contact" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-orange-600 transition font-medium shadow-sm">Liên hệ</a>
+                </div>
+
+                <!-- Nút Menu Mobile (Hamburger) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Ẩn mặc định) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-md absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#generator" class="block px-3 py-2 text-gray-800 font-medium hover:bg-orange-50 hover:text-primary rounded-md transition">Tạo Link</a>
+                <a href="#guide" class="block px-3 py-2 text-gray-800 font-medium hover:bg-orange-50 hover:text-primary rounded-md transition">Hướng dẫn</a>
+                <a href="#contact" class="block px-3 py-2 text-primary font-medium hover:bg-orange-50 rounded-md transition">Liên hệ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CÔNG CỤ TẠO LINK AFFILIATE -->
+    <section id="generator" class="pt-32 pb-16 min-h-screen bg-gray-50 flex items-center relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-orange-100 opacity-50 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-orange-100 opacity-50 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+            <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 sm:p-12 relative overflow-hidden">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 text-center tracking-tight">Tạo Link Affiliate Shopee</h1>
+                <p class="text-gray-500 text-center mb-10 text-lg">Dán đường dẫn sản phẩm Shopee vào đây để tự động gắn mã tiếp thị của bạn.</p>
+
+                <div class="space-y-5 relative z-10">
+                    <div>
+                        <label for="shopee-url" class="block text-sm font-semibold text-gray-700 mb-2">Link sản phẩm gốc</label>
+                        <div class="relative">
+                            <input type="url" id="shopee-url" placeholder="VD: https://shopee.vn/..." class="w-full pl-4 pr-12 py-4 rounded-xl border border-gray-300 focus:ring-4 focus:ring-orange-100 focus:border-primary outline-none transition text-gray-700 bg-gray-50 focus:bg-white shadow-inner">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                            </div>
+                        </div>
+                        <p id="error-msg" class="text-red-500 text-sm mt-2 hidden font-medium"></p>
+                    </div>
+
+                    <button id="generate-btn" class="w-full bg-primary hover:bg-orange-600 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-orange-200 transition-all duration-200 flex justify-center items-center gap-2 text-lg active:scale-[0.98]">
+                        Tạo Link Tiếp Thị
+                    </button>
+                </div>
+
+                <!-- Vùng hiển thị kết quả -->
+                <div id="result-box" class="mt-8 p-6 bg-orange-50 rounded-2xl border border-orange-200 hidden transition-all relative z-10 animate-fade-in-up">
+                    <h3 class="text-sm font-bold text-gray-800 mb-3 uppercase tracking-wider">Link Affiliate của bạn:</h3>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="result-url" readonly class="flex-1 px-4 py-3 bg-white rounded-xl border border-orange-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm font-medium">
+                        <button id="copy-btn" class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-xl font-semibold transition-colors whitespace-nowrap flex items-center justify-center gap-2 shadow-md">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            <span id="copy-text">Copy Link</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Phần hiển thị QR Code mới thêm vào -->
+                    <div class="mt-6 border-t border-orange-200 pt-6 flex flex-col items-center justify-center">
+                        <p class="text-sm font-medium text-gray-600 mb-3 text-center">Dùng camera điện thoại quét mã dưới đây để test thử tính năng <strong class="text-primary">tự động mở App Shopee</strong>:</p>
+                        <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                            <img id="qr-code" src="" class="w-36 h-36 object-contain" alt="QR Code Link Shopee">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHÂN TRANG (FOOTER) -->
+    <footer class="bg-gray-900 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Cột 1 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-white tracking-tight mb-4">ShopeeAffil<span class="text-primary">.</span></h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Công cụ hỗ trợ tạo link tiếp thị liên kết Shopee nhanh chóng, chuyên nghiệp và tiện lợi nhất. 
+                    </p>
+                </div>
+                
+                <!-- Cột 2 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Liên kết nhanh</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#generator" class="hover:text-white transition">Tạo Link</a></li>
+                        <li><a href="#guide" class="hover:text-white transition">Hướng dẫn</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3 -->
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Theo dõi chúng tôi</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center md:text-left md:flex md:items-center md:justify-between">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2026 ShopeeAffil. Bản quyền đã được bảo hộ.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script xử lý sự kiện -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // LOGIC MENU MOBILE
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+            
+            // Ẩn menu khi click vào một liên kết trên mobile
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+
+            // LOGIC CÔNG CỤ TẠO LINK AFFILIATE
+            const generateBtn = document.getElementById('generate-btn');
+            const urlInput = document.getElementById('shopee-url');
+            const errorMsg = document.getElementById('error-msg');
+            const resultBox = document.getElementById('result-box');
+            const resultUrl = document.getElementById('result-url');
+            const copyBtn = document.getElementById('copy-btn');
+            const qrCodeImg = document.getElementById('qr-code');
+            // => ĐÃ CẬP NHẬT MÃ AFFILIATE ID CỦA BẠN (17367020100)
+            const AFFILIATE_ID = '17367020100'; 
+
+            generateBtn.addEventListener('click', () => {
+                const url = urlInput.value.trim();
+                
+                // Reset trạng thái báo lỗi và ẩn kết quả
+                errorMsg.classList.add('hidden');
+                resultBox.classList.add('hidden');
+
+                // Kiểm tra 1: Nhập chưa
+                if (!url) {
+                    errorMsg.textContent = 'Vui lòng dán link sản phẩm vào ô trống!';
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+
+                // Kiểm tra 2: Có phải link shopee không (hỗ trợ shopee.vn, shope.ee...)
+                if (!url.toLowerCase().includes('shopee') && !url.toLowerCase().includes('shope.ee')) {
+                    errorMsg.textContent = 'Đường dẫn không hợp lệ. Vui lòng nhập link thuộc hệ thống Shopee.';
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+
+                try {
+                    // Cấu trúc Deep Link của Shopee Affiliate
+                    // Mã hóa URL gốc để tránh lỗi ký tự đặc biệt
+                    const encodedUrl = encodeURIComponent(url);
+                    
+                    // Nối URL gốc vào hệ thống chuyển hướng (universal-link) của Shopee 
+                    // kèm theo Affiliate ID của bạn (tham số utm_source=an_...)
+                    const finalAffiliateUrl = `https://shopee.vn/universal-link?redir=${encodedUrl}&utm_source=an_${AFFILIATE_ID}&utm_medium=affiliates&utm_campaign=web_tool`;
+                    
+                    // Điền kết quả và hiển thị
+                    resultUrl.value = finalAffiliateUrl;
+                    
+                    // Tạo mã QR thông qua API miễn phí
+                    qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(finalAffiliateUrl)}`;
+
+                    resultBox.classList.remove('hidden');
+                    
+                } catch (e) {
+                    errorMsg.textContent = 'Đã có lỗi xảy ra trong quá trình tạo link.';
+                    errorMsg.classList.remove('hidden');
+                }
+            });
+
+            // LOGIC NÚT COPY (SỬ DỤNG CLIPBOARD API)
+            copyBtn.addEventListener('click', () => {
+                resultUrl.select();
+                resultUrl.setSelectionRange(0, 99999); // Hỗ trợ copy trên mobile
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(resultUrl.value).then(showSuccessState).catch(fallbackCopy);
+                } else {
+                    fallbackCopy();
+                }
+            });
+
+            function fallbackCopy() {
+                document.execCommand('copy');
+                showSuccessState();
+            }
+
+            function showSuccessState() {
+                const originalHTML = copyBtn.innerHTML;
+                
+                // Đổi nút thành trạng thái thành công (Màu xanh, tick v)
+                copyBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="font-bold">Đã Copy!</span>`;
+                copyBtn.classList.replace('bg-gray-800', 'bg-green-600');
+                copyBtn.classList.replace('hover:bg-gray-900', 'hover:bg-green-700');
+                
+                // Khôi phục lại nút ban đầu sau 2 giây
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHTML;
+                    copyBtn.classList.replace('bg-green-600', 'bg-gray-800');
+                    copyBtn.classList.replace('hover:bg-green-700', 'hover:bg-gray-900');
+                }, 2000);
+            }
+            
+            // Hỗ trợ nhấn phím Enter để tạo link
+            urlInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    generateBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
