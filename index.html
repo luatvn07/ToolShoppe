@@ -31,7 +31,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="text-2xl font-bold text-primary tracking-tight">Vũ Văn Luật<span class="text-gray-900">.</span></a>
+                    <a href="#" class="text-2xl font-bold text-primary tracking-tight">Vũ Văn Luật<span class="text-gray-900">Shoppe</span></a>
                 </div>
                 
                 <!-- Menu Desktop -->
@@ -70,8 +70,7 @@
 
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 sm:p-12 relative overflow-hidden">
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 text-center tracking-tight">Tạo Link Affiliate Shopee</h1>
-                <p class="text-gray-500 text-center mb-10 text-lg">Dán đường dẫn sản phẩm Shopee vào đây để tự động gắn mã tiếp thị của bạn.</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4 text-center tracking-tight">Dán Link Shoppe Vào Đây</h1>
 
                 <div class="space-y-5 relative z-10">
                     <div>
@@ -86,24 +85,36 @@
                     </div>
 
                     <button id="generate-btn" class="w-full bg-primary hover:bg-orange-600 text-white font-bold py-4 px-4 rounded-xl shadow-lg shadow-orange-200 transition-all duration-200 flex justify-center items-center gap-2 text-lg active:scale-[0.98]">
-                        Tạo Link Tiếp Thị
+                        Tạo 
                     </button>
                 </div>
 
                 <!-- Vùng hiển thị kết quả -->
                 <div id="result-box" class="mt-8 p-6 bg-orange-50 rounded-2xl border border-orange-200 hidden transition-all relative z-10 animate-fade-in-up">
-                    <h3 class="text-sm font-bold text-gray-800 mb-3 uppercase tracking-wider">Link Affiliate của bạn:</h3>
+                    <h3 class="text-sm font-bold text-gray-800 mb-3 uppercase tracking-wider">Link của bạn:</h3>
+                    
+                    <!-- Group input link và 2 nút chức năng -->
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="text" id="result-url" readonly class="flex-1 px-4 py-3 bg-white rounded-xl border border-orange-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm font-medium">
-                        <button id="copy-btn" class="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-xl font-semibold transition-colors whitespace-nowrap flex items-center justify-center gap-2 shadow-md">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            <span id="copy-text">Copy Link</span>
-                        </button>
+                        
+                        <div class="flex gap-2">
+                            <!-- Nút Copy -->
+                            <button id="copy-btn" class="flex-1 sm:flex-none bg-gray-800 hover:bg-gray-900 text-white px-5 py-3 rounded-xl font-semibold transition-colors whitespace-nowrap flex items-center justify-center gap-2 shadow-md">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                <span id="copy-text">Copy</span>
+                            </button>
+                            
+                            <!-- Nút Mở App -->
+                            <button id="open-app-btn" class="flex-1 sm:flex-none bg-primary hover:bg-orange-600 text-white px-5 py-3 rounded-xl font-semibold transition-colors whitespace-nowrap flex items-center justify-center gap-2 shadow-md">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                <span>Mở App</span>
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Phần hiển thị QR Code -->
                     <div class="mt-6 border-t border-orange-200 pt-6 flex flex-col items-center justify-center">
-                        <p class="text-sm font-medium text-gray-600 mb-3 text-center">Dùng camera điện thoại quét mã dưới đây để test thử tính năng <strong class="text-primary">tự động mở App Shopee</strong>:</p>
+                        <p class="text-sm font-medium text-gray-600 mb-3 text-center">Dùng camera điện thoại quét mã dưới đây để <strong class="text-primary">tự động mở App Shopee</strong>:</p>
                         <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-200">
                             <img id="qr-code" src="" class="w-36 h-36 object-contain" alt="QR Code Link Shopee">
                         </div>
@@ -183,6 +194,7 @@
             const resultBox = document.getElementById('result-box');
             const resultUrl = document.getElementById('result-url');
             const copyBtn = document.getElementById('copy-btn');
+            const openAppBtn = document.getElementById('open-app-btn');
             const qrCodeImg = document.getElementById('qr-code');
             const AFFILIATE_ID = '17367020100'; 
 
@@ -200,7 +212,7 @@
                     return;
                 }
 
-                // Kiểm tra 2: Có phải link shopee không (cập nhật để nhận diện cả shp.ee)
+                // Kiểm tra 2: Có phải link shopee không 
                 const lowerUrl = url.toLowerCase();
                 if (!lowerUrl.includes('shopee') && !lowerUrl.includes('shope.ee') && !lowerUrl.includes('shp.ee')) {
                     errorMsg.textContent = 'Đường dẫn không hợp lệ. Vui lòng nhập link thuộc hệ thống Shopee.';
@@ -223,15 +235,23 @@
                 }
             });
 
-            // LOGIC NÚT COPY (SỬ DỤNG CLIPBOARD API)
+            // LOGIC NÚT COPY 
             copyBtn.addEventListener('click', () => {
                 resultUrl.select();
-                resultUrl.setSelectionRange(0, 99999); // Hỗ trợ copy trên mobile
+                resultUrl.setSelectionRange(0, 99999); 
                 
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(resultUrl.value).then(showSuccessState).catch(fallbackCopy);
                 } else {
                     fallbackCopy();
+                }
+            });
+            
+            // LOGIC NÚT MỞ APP 
+            openAppBtn.addEventListener('click', () => {
+                if (resultUrl.value) {
+                    // Mở tab mới, hệ điều hành trên điện thoại sẽ bắt link này và mở app Shopee
+                    window.open(resultUrl.value, '_blank');
                 }
             });
 
