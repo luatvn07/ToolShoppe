@@ -101,7 +101,7 @@
                         </button>
                     </div>
                     
-                    <!-- Phần hiển thị QR Code mới thêm vào -->
+                    <!-- Phần hiển thị QR Code -->
                     <div class="mt-6 border-t border-orange-200 pt-6 flex flex-col items-center justify-center">
                         <p class="text-sm font-medium text-gray-600 mb-3 text-center">Dùng camera điện thoại quét mã dưới đây để test thử tính năng <strong class="text-primary">tự động mở App Shopee</strong>:</p>
                         <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-200">
@@ -184,7 +184,6 @@
             const resultUrl = document.getElementById('result-url');
             const copyBtn = document.getElementById('copy-btn');
             const qrCodeImg = document.getElementById('qr-code');
-            // => ĐÃ CẬP NHẬT MÃ AFFILIATE ID CỦA BẠN (17367020100)
             const AFFILIATE_ID = '17367020100'; 
 
             generateBtn.addEventListener('click', () => {
@@ -201,26 +200,19 @@
                     return;
                 }
 
-                // Kiểm tra 2: Có phải link shopee không (hỗ trợ shopee.vn, shope.ee...)
-                if (!url.toLowerCase().includes('shopee') && !url.toLowerCase().includes('shope.ee')) {
+                // Kiểm tra 2: Có phải link shopee không (cập nhật để nhận diện cả shp.ee)
+                const lowerUrl = url.toLowerCase();
+                if (!lowerUrl.includes('shopee') && !lowerUrl.includes('shope.ee') && !lowerUrl.includes('shp.ee')) {
                     errorMsg.textContent = 'Đường dẫn không hợp lệ. Vui lòng nhập link thuộc hệ thống Shopee.';
                     errorMsg.classList.remove('hidden');
                     return;
                 }
 
                 try {
-                    // Cấu trúc Deep Link của Shopee Affiliate
-                    // Mã hóa URL gốc để tránh lỗi ký tự đặc biệt
                     const encodedUrl = encodeURIComponent(url);
-                    
-                    // Nối URL gốc vào hệ thống chuyển hướng (universal-link) của Shopee 
-                    // kèm theo Affiliate ID của bạn (tham số utm_source=an_...)
                     const finalAffiliateUrl = `https://shopee.vn/universal-link?redir=${encodedUrl}&utm_source=an_${AFFILIATE_ID}&utm_medium=affiliates&utm_campaign=web_tool`;
                     
-                    // Điền kết quả và hiển thị
                     resultUrl.value = finalAffiliateUrl;
-                    
-                    // Tạo mã QR thông qua API miễn phí
                     qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(finalAffiliateUrl)}`;
 
                     resultBox.classList.remove('hidden');
@@ -251,12 +243,10 @@
             function showSuccessState() {
                 const originalHTML = copyBtn.innerHTML;
                 
-                // Đổi nút thành trạng thái thành công (Màu xanh, tick v)
                 copyBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="font-bold">Đã Copy!</span>`;
                 copyBtn.classList.replace('bg-gray-800', 'bg-green-600');
                 copyBtn.classList.replace('hover:bg-gray-900', 'hover:bg-green-700');
                 
-                // Khôi phục lại nút ban đầu sau 2 giây
                 setTimeout(() => {
                     copyBtn.innerHTML = originalHTML;
                     copyBtn.classList.replace('bg-green-600', 'bg-gray-800');
